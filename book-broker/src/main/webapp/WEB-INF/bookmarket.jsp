@@ -57,23 +57,25 @@
 				</thead>
 				<tbody>
 					<c:forEach var="book" items="${books}">
-						<tr>
-							<td>${book.id}</td>
-							<td><a href="books/${book.id}">${book.title}</a></td>
-							<td>${book.author}</td>
-							<td>${book.user.userName}</td>
-							<c:choose>
-								<c:when test="${loggedInUser.id == book.user.id}">
-									<td><a href="books/${book.id}/edit">Edit</a> 
-										||
-										<a href="books/${book.id}/edit">Delete</a>
-									</td>
-								</c:when>
-								<c:otherwise>
-									<td><a href="bookmarket/${book.id}/borrow">Borrow</a></td>
-								</c:otherwise>
-							</c:choose>
-						</tr>
+						<c:if test="${loggedInUser.id != book.borrower.id}">
+							<tr>
+								<td>${book.id}</td>
+								<td><a href="books/${book.id}">${book.title}</a></td>
+								<td>${book.author}</td>
+								<td>${book.user.userName}</td>
+								<c:choose>
+									<c:when test="${loggedInUser.id == book.user.id}">
+										<td><a href="books/${book.id}/edit">Edit</a> 
+											||
+											<a href="books/${book.id}/edit">Delete</a>
+										</td>
+									</c:when>
+									<c:otherwise>
+										<td><a href="bookmarket/${book.id}/borrow">Borrow</a></td>
+									</c:otherwise>
+								</c:choose>
+							</tr>
+						</c:if>
 					</c:forEach>
 				</tbody>
 			</table>
